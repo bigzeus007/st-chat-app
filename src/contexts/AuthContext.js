@@ -6,20 +6,18 @@ import { auth } from "../firebase";
 
 const AuthContext = React.createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const history = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
-      history("/chats", { replace: true });
+      if(user) history("/chats");
     });
   }, [user, history]);
 

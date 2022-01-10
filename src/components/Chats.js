@@ -12,6 +12,9 @@ export default function Chats() {
   const didMountRef = useRef(false)
   const [ loading, setLoading ] = useState(true)
   const { user } = useAuth()
+
+  console.log(user);
+
   const history = useNavigate()
 
   async function handleLogout() {
@@ -19,10 +22,10 @@ export default function Chats() {
     history("/")
   }
 
-  async function getFile(url) {
+  const getFile= async (url)=> {
     let response = await fetch(url);
     let data = await response.blob();
-    return new File([data], "test.jpg", { type: 'image/jpeg' });
+    return new File([data], "userPhoto.jpg", { type: 'image/jpeg' });
   }
 
   useEffect(() => {
@@ -31,14 +34,14 @@ export default function Chats() {
 
       if (!user || user === null) {
         history("/")
-        return
+        return;
       }
       
       // Get-or-Create should be in a Firebase Function
       axios.get(
         'https://api.chatengine.io/users/me/',
         { headers: { 
-          "project-id": '784bdb9e-8724-4f63-8ab6-3c10d59f74a7',
+          "project-id": process.env.REACT_APP_CHAT_ENGINE_ID ,
           "user-name": user.email,
           "user-secret": user.uid
         }}
@@ -57,9 +60,9 @@ export default function Chats() {
           formdata.append('avatar', avatar, avatar.name)
 
           axios.post(
-            'https://api.chatengine.io/users/',
+            'https://api.chatengine.io/users',
             formdata,
-            { headers: { "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY }}
+            { headers: { "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY }} //process.env.REACT_APP_CHAT_ENGINE_KEY
           )
           .then(() => setLoading(false))
           .catch(e => console.log('e', e.response))
@@ -71,12 +74,12 @@ export default function Chats() {
   }, [user, history])
   
 
-  if (!user || loading) return <div />
+  if (!user || loading) return "Loading ..."
 
   return (
     <div className='chats-page'>
       <div className='nav-bar'>
-        <div className='logo-tab'>
+        <div className='logo-tab'>  
           Unichat
         </div>
 
@@ -86,10 +89,10 @@ export default function Chats() {
       </div>
 
       <ChatEngine
-			height='100vh'
-			userName='Starhi'
-			userSecret='AO82*+@#?ksj98='
-			projectID='7ad26904-84d4-447b-9b4d-ee5bf1690008'
+			height='calc(100vh -66px)'
+			userName={user.email}
+			userSecret={user.uid}
+			projectID={process.env.REACT_APP_CHAT_ENGINE_ID}
 		/>
     </div>
   )
