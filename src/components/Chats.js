@@ -10,10 +10,10 @@ import { auth } from "../firebase"
 
 export default function Chats() {
   const didMountRef = useRef(false)
-  const [ loading, setLoading ] = useState(true)
+  const [ loading, setLoading ] = useState(false)
   const { user } = useAuth()
 
-  console.log(user);
+  console.log("First console.log " + user);
 
   const history = useNavigate()
 
@@ -22,7 +22,7 @@ export default function Chats() {
     history("/")
   }
 
-  const getFile= async (url)=> {
+  const getFile = async (url)=> {
     let response = await fetch(url);
     let data = await response.blob();
     return new File([data], "userPhoto.jpg", { type: 'image/jpeg' });
@@ -47,7 +47,7 @@ export default function Chats() {
         }}
       )
 
-      .then(() => setLoading(false))
+      .then(() => {setLoading(false)})
 
       .catch(e => {
         let formdata = new FormData()
@@ -62,7 +62,7 @@ export default function Chats() {
           axios.post(
             'https://api.chatengine.io/users',
             formdata,
-            { headers: { "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY }} //process.env.REACT_APP_CHAT_ENGINE_KEY
+            { headers: { "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY }}
           )
           .then(() => setLoading(false))
           .catch(e => console.log('e', e.response))
@@ -73,7 +73,8 @@ export default function Chats() {
     }
   }, [user, history])
   
-
+  console.log("My User " + user)
+  console.log("My Loading " + loading);
   if (!user || loading) return "Loading ..."
 
   return (
