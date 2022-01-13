@@ -10,7 +10,9 @@ export default function Login() {
   return (
     <div id='login-page'>
       <div id='login-card'>
-        <h2>Welcome to Chat-app</h2>
+        <h2>Welcome to ST Chat-app</h2>
+
+
 
         <div
           className='login-button google'
