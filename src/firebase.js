@@ -7,7 +7,7 @@ import "firebase/compat/auth";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyDrsr63DkvNnQJD2iLqzG4yIUAA5TsdeZ8",
   authDomain: "st-chat-engine.firebaseapp.com",
   databaseURL:
     "https://st-chat-engine-default-rtdb.europe-west1.firebasedatabase.app",
