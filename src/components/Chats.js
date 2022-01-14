@@ -88,7 +88,7 @@ export default function Chats() {
         height="calc(100vh -66px)"
         userName={user.email}
         userSecret={user.uid}
-        projectID={process.env.REACT_APP_CHAT_ENGINE_ID}
+        projectID='7ad26904-84d4-447b-9b4d-ee5bf1690008'
         onNewMessage={() =>
           new Audio(
             "https://chat-engine-assets.s3.amazonaws.com/click.mp3"
