@@ -13,8 +13,6 @@ export default function Chats() {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  console.log("First console.log " + user);
-
   const history = useNavigate();
 
   async function handleLogout() {
@@ -40,7 +38,7 @@ export default function Chats() {
       axios
         .get("https://api.chatengine.io/users/me/", {
           headers: {
-            "project-id": "7ad26904-84d4-447b-9b4d-ee5bf1690008",
+            "project-id": process.env.REACT_APP_CHAT_ENGINE_ID,
             "user-name": user.email,
             "user-secret": user.uid,
           },
@@ -62,7 +60,7 @@ export default function Chats() {
             axios
               .post("https://api.chatengine.io/users", formdata, {
                 headers: {
-                  "private-key": "235f9eea-7e77-47f2-8c0a-4c599f139046",
+                  "private-key":process.env.REACT_APP_CHAT_ENGINE_KEY,
                 },
               })
               .then(() => setLoading(false))
@@ -88,7 +86,7 @@ export default function Chats() {
         height="calc(100vh -66px)"
         userName={user.email}
         userSecret={user.uid}
-        projectID="7ad26904-84d4-447b-9b4d-ee5bf1690008"
+        projectID={process.env.REACT_APP_CHAT_ENGINE_ID}
         onNewMessage={() =>
           new Audio(
             "https://chat-engine-assets.s3.amazonaws.com/click.mp3"
